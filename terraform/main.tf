@@ -67,10 +67,9 @@ resource "oci_container_instances_container_instance" "container_instance" {
   
   containers {
     arguments = [
-      "--config.file=/etc/prometheus/prometheus.yml",
+      "--config.file=${var.config_mount_path}/${var.config_file}",
       "--enable-feature=auto-reload-config",
       "--config.auto-reload-interval=30s"
-      "--log.level=debug"
     ]
     image_url    = var.prometheus_image
     display_name = "prometheus"
@@ -85,6 +84,10 @@ resource "oci_container_instances_container_instance" "container_instance" {
     volume_mounts {
           mount_path  = var.log_mount_path
           volume_name = var.log_mount_name
+    }
+    volume_mounts {
+          mount_path  = var.config_mount_path
+          volume_name = var.config_mount_name
     }
     
   }
