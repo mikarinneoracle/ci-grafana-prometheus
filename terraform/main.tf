@@ -5,9 +5,34 @@ resource "oci_container_instances_container_instance" "container_instance" {
   #### LIST ALL APP CONTAINERS HERE ####
   
   containers {
+    image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.sidecar_image}"
+    display_name = "sidecar"
+    environment_variables = {
+      "config_file" = var.config_file
+      "config_bucket" = var.config_bucket
+      "config_path" = var.config_mount_path
+    }
 
-    image_url    = var.prometheus_image
-    display_name = "prometheus"
+    is_resource_principal_disabled = "false"
+    resource_config {
+      memory_limit_in_gbs = "1.0"
+      vcpus_limit         = "1.0"
+    }
+    volume_mounts {
+          mount_path  = var.log_mount_path
+          volume_name = var.log_mount_name
+    }
+    volume_mounts {
+          mount_path  = var.config_mount_path
+          volume_name = var.config_mount_name
+    }
+
+  }
+  
+  containers {
+
+    image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.app_image_1}"
+    display_name = "Java demo"
     environment_variables = {
     }
     
@@ -41,9 +66,12 @@ resource "oci_container_instances_container_instance" "container_instance" {
   }
   
   containers {
-
-    image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.app_image_1}"
-    display_name = "Java demo"
+    arguments = [
+      "enable-feature=auto-reload-config",
+      "config.auto-reload-interval=30s",
+    ]
+    image_url    = var.prometheus_image
+    display_name = "prometheus"
     environment_variables = {
     }
     
@@ -56,31 +84,7 @@ resource "oci_container_instances_container_instance" "container_instance" {
           mount_path  = var.log_mount_path
           volume_name = var.log_mount_name
     }
-  }
-  
-  containers {
-    image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.sidecar_image}"
-    display_name = "sidecar"
-    environment_variables = {
-      "config_file" = var.config_file
-      "config_bucket" = var.config_bucket
-      "config_path" = var.config_mount_path
-    }
-
-    is_resource_principal_disabled = "false"
-    resource_config {
-      memory_limit_in_gbs = "1.0"
-      vcpus_limit         = "1.0"
-    }
-    volume_mounts {
-          mount_path  = var.log_mount_path
-          volume_name = var.log_mount_name
-    }
-    volume_mounts {
-          mount_path  = var.config_mount_path
-          volume_name = var.config_mount_name
-    }
-
+    
   }
   
   #######################################
