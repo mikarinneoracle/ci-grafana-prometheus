@@ -24,6 +24,12 @@ jobs:
           registry: fra.ocir.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.AUTH_TOKEN }}
+          
+    - name: Build and Push the Sidecar image to OCIR
+      run: |
+        cd sidecar
+        docker build . -t fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/prometheus-sidecar:1.0.0
+        docker push -q fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/prometheus-sidecar:1.0.0
     -
           name: Set up JDK 21
           uses: actions/setup-java@v4
