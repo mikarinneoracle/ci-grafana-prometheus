@@ -23,19 +23,19 @@ variable "ocir_region" {
 
 variable "sidecar_image" {
   type = string
+  default = "prometheus-sidecar:1.0.0"
   description = "CI sidecar image e.g. prometheus-sidecar:1.0.0"
 }
 
 variable "prometheus_image" {
   type = string
+  description = "Prometheus Node Exporter prom/node-exporter"
 }
 
 variable "app_image_1" {
   type = string
-}
-
-variable "app_image_2" {
-  type = string
+  default = "prometheusjavademo:1.0.0"
+  description = "App image e.g. prometheusjavademo:1.0.0"
 }
 
 ##################################
