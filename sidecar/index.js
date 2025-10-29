@@ -18,8 +18,8 @@ async function start() {
     const log_file = process.env.log_file;
     console.log("LOG FILE:" + log_file);
 
-    const provider = new common.ConfigFileAuthenticationDetailsProvider("~/.oci/config");
-    //const provider = common.ResourcePrincipalAuthenticationDetailsProvider.builder();
+    //const provider = new common.ConfigFileAuthenticationDetailsProvider("~/.oci/config");
+    const provider = common.ResourcePrincipalAuthenticationDetailsProvider.builder();
 
     const osClient = new objectstorage.ObjectStorageClient({ authenticationDetailsProvider: provider });
     const logClient = new loggingingestion.LoggingClient({ authenticationDetailsProvider: provider });
