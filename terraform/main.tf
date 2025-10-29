@@ -67,8 +67,9 @@ resource "oci_container_instances_container_instance" "container_instance" {
   
   containers {
     arguments = [
-      "enable-feature=auto-reload-config",
-      "config.auto-reload-interval=30s",
+      "--config.file=/etc/prometheus/prometheus.yml",
+      "--enable-feature=auto-reload-config",
+      "--config.auto-reload-interval=30s",
     ]
     image_url    = var.prometheus_image
     display_name = "prometheus"
