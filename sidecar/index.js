@@ -84,4 +84,35 @@ async function start() {
     }
 }
 
+async function writeLog(logClient, log_ocid, subject, type, data)
+{
+  try {
+        const putLogsDetails = {
+          specversion: "1.0",
+          logEntryBatches: [
+            {
+              entries: [
+                {
+                  id: subject,
+                  data: data
+                }
+              ],
+              source: "nginx-logging-sidecar",
+              type: type,
+              subject: subject
+            }
+          ]
+        };
+        var putLogsRequest = loggingingestion.requests.PutLogsRequest = {
+          logId: log_ocid,
+          putLogsDetails: putLogsDetails,
+          timestampOpcAgentProcessing: new Date()
+        };
+        const putLogsResponse = await logClient.putLogs(putLogsRequest);
+        //console.log("Wrote to log succesfully");
+  } catch (err) {
+    console.error('Log error: ' + err.message);
+  }
+}
+
 start();
