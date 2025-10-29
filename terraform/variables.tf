@@ -27,9 +27,16 @@ variable "sidecar_image" {
   description = "CI sidecar image e.g. prometheus-sidecar:1.0.0"
 }
 
+variable "prometheus_node_exporter_image" {
+  type = string
+  default = "quay.io/prometheus/node-exporter:latest"
+  description = "Prometheus Node Exporter image e.g. quay.io/prometheus/node-exporter:latest"
+}
+
 variable "prometheus_image" {
   type = string
-  description = "Prometheus Node Exporter prom/node-exporter"
+  default = "prom/prometheus:main"
+  description = "Prometheus image e.g. prom/prometheus:main"
 }
 
 variable "app_image_1" {
