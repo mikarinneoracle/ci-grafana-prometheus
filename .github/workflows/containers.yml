@@ -33,7 +33,7 @@ jobs:
             cache: maven
     - name: Build with Maven
       run: |
-        cd ci-signup-web
+        cd PrometheusJavaDemo
         mvn clean package
         docker build . -t fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/prometheusjavademo:1.0.0
         docker push -q fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/prometheusjavademo:1.0.0
