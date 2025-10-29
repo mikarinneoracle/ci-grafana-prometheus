@@ -45,6 +45,9 @@ async function start() {
            }
            console.log('File written successfully to' + fileName);
        });
+       setTimeout(function() {
+            mountConfig(osClient, namespace, bucket, config_path, config_file);
+       }, 30000);
     }
 }
 
