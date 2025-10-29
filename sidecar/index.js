@@ -44,8 +44,8 @@ async function start() {
       .start()
       .catch((err) => {
         console.error('Cannot start.  Does " + log_file + "  exist?', err)
-      })
-    }
+      });
+
     async function mountConfig(osClient, namespace, bucket, config_path, config_file)
     {
        const getObjectRequest = {

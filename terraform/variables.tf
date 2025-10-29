@@ -53,6 +53,11 @@ variable "ad_number" {
   description = "AD number (1,2,or 3)"
 }
 
+variable "log_ocid" {
+  type    = string
+  description = "OCI Logging log OCID"
+}
+
 variable "log_mount_path" {
   type    = string
   default = "/var/log"

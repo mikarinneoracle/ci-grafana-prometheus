@@ -12,6 +12,7 @@ resource "oci_container_instances_container_instance" "container_instance" {
       "config_bucket" = var.config_bucket
       "config_path" = var.config_mount_path
       "log_file" = "${var.log_mount_path}/${var.log_file}"
+      "log_ocid" = var.log_ocid
     }
 
     is_resource_principal_disabled = "false"
