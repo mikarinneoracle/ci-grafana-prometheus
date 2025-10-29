@@ -38,7 +38,9 @@ public class PrometheusJavaDemo {
     @GetMapping("/")
     public String sayHello() throws InterruptedException {
         requestCount.inc();
-        return "Hello, World!\n";
+        String message = "Hello, World, " + System.currentTimeMillis() % 1000 + "!\n";
+        System.out.println(message);
+        return message;
     }
 
     @Bean
