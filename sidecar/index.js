@@ -29,9 +29,9 @@ async function start() {
     const namespace = nsResponse.value;
 
     mountConfig(osClient, namespace, bucket, config_path, config_file);
-    startTail(log_file);
+    startTail(log_ocid, log_file);
     
-    async function startTail(log_file)
+    async function startTail(log_ocid, log_file)
     {
       const tail = new tailfile(log_file, {encoding: 'utf8'})
       .on('data', (chunk) => {
@@ -49,7 +49,7 @@ async function start() {
         console.log("Cannot start.  Does " + log_file + "  exist?")
         setTimeout(function() {
             console.log("Trying again to open " + log_file + " ..");
-            startTail(log_file);
+            startTail(log_ocid, log_file);
         }, 5000);
       });
     }
