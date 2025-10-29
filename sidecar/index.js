@@ -35,7 +35,7 @@ async function start() {
     {
       const tail = new tailfile(log_file, {encoding: 'utf8'})
       .on('data', (chunk) => {
-        console.log(`${chunk}`)
+        //console.log(`${chunk}`)
         writeLog(logClient, log_ocid, log_file, log_file, `${chunk}`)
       })
       .on('tail_error', (err) => {
@@ -48,7 +48,7 @@ async function start() {
       .catch((err) => {
         console.log("Cannot start.  Does " + log_file + "  exist?")
         setTimeout(function() {
-            console.log("Trying again " + log_file + " ..");
+            console.log("Trying again to open " + log_file + " ..");
             startTail(log_file);
         }, 5000);
       });
