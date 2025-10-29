@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+
 @SpringBootApplication
 @RestController
 public class PrometheusJavaDemo {
@@ -19,6 +22,15 @@ public class PrometheusJavaDemo {
             .register();
 
     public static void main(String[] args) {
+        String logFile = System.getenv("log_file");
+        if(logFile != null) {
+            System.out.println("Sending STDOUT logs to " + logFile);
+            try {
+                System.setOut(new PrintStream(new FileOutputStream(logFile, true)));
+            } catch (Exception e) {
+                System.out.println("Logs output error to " + logFile + " is :" + e.getMessage());
+            }
+        }
         SpringApplication.run(PrometheusJavaDemo.class, args);
         JvmMetrics.builder().register();
     }
