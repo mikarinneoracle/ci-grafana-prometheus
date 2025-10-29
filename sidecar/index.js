@@ -11,7 +11,7 @@ async function start() {
     const bucket = process.env.config_bucket;
     console.log("BUCKET:" + bucket);
 
-    //const provider = new common.ConfigFileAuthenticationDetailsProvider("config");
+    //const provider = new common.ConfigFileAuthenticationDetailsProvider("~/.oci/config");
     const provider = common.ResourcePrincipalAuthenticationDetailsProvider.builder();
 
     const osClient = new objectstorage.ObjectStorageClient({ authenticationDetailsProvider: provider });
@@ -46,6 +46,7 @@ async function start() {
            console.log('File written successfully to' + fileName);
        });
        setTimeout(function() {
+            console.log("Reloading config ..");
             mountConfig(osClient, namespace, bucket, config_path, config_file);
        }, 30000);
     }
