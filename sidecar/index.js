@@ -29,8 +29,11 @@ async function start() {
     const namespace = nsResponse.value;
 
     mountConfig(osClient, namespace, bucket, config_path, config_file);
-
-    const tail = new tailfile(log_file, {encoding: 'utf8'})
+    startTail(log_file);
+    
+    async function startTail(log_file)
+    {
+      const tail = new tailfile(log_file, {encoding: 'utf8'})
       .on('data', (chunk) => {
         console.log(`${chunk}`)
         writeLog(logClient, log_ocid, "Sidecar logs", "Sidecar logs", `${chunk}`)
@@ -43,8 +46,13 @@ async function start() {
       })
       .start()
       .catch((err) => {
-        console.error('Cannot start.  Does " + log_file + "  exist?', err)
+        console.log("Cannot start.  Does " + log_file + "  exist?")
+        setTimeout(function() {
+            console.log("Trying again " + log_file + " ..");
+            startTail(log_file);
+        }, 5000);
       });
+    }
 
     async function mountConfig(osClient, namespace, bucket, config_path, config_file)
     {

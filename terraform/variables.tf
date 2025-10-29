@@ -90,7 +90,7 @@ variable "config_file" {
 
 variable "log_file" {
   type    = string
-  default = "prometheus.yml"
+  default = "app.log"
 }
 
 
