@@ -66,7 +66,7 @@ async function downloadFile(osClient, namespace, bucket, file, path)
     if(getObjectResponse.contentType.indexOf("directory") > 0) {
       console.log(file.name + " is a directory, creating .. ");
       fs.mkdir(path + "/" + file.name, (err) => {
-        if (err) console.log(err);
+        //if (err) console.log(err);
       });
     } else {
      var chunks = [];
@@ -76,7 +76,7 @@ async function downloadFile(osClient, namespace, bucket, file, path)
      var buffer = Buffer.concat(chunks);
      await fs.writeFile(path + "/" + file.name, buffer, null, (err) => {
        if (err) {
-         console.log('Error writing file:', err);
+         //console.log('Error writing file:', err);
          return;
        }
        console.log('File written successfully to' + path + "/" + file.name);
