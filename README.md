@@ -34,7 +34,7 @@ Directories in the bucket:
 </pre>
 Upload files from <code>object-storage</code> to the directory structure above in the bucket.
 <p>
-<b>Note!</b> Remember to change the <code>username</code> and <code>password</code> in Grafana <code>config.ini</code> before uploading!
+<b>Note!</b> Remember to change the <code>username</code> and <code>password</code> in <code>grafana.ini</code> before uploading!
 
 ## Deploy the Container Instances with the Terraform Stack
 
