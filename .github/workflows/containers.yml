@@ -2,12 +2,12 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main", "grafana" ]
+    branches: [ "main" ]
     paths-ignore:
       - 'README.md'
       - 'www-data/**'
   pull_request:
-    branches: [ "main", "grafana" ]
+    branches: [ "main" ]
 
 jobs:
 
