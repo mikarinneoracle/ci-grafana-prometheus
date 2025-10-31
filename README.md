@@ -1,4 +1,4 @@
-# Container Instances Prometheus setup with node-exporter, a Spring Boot app and OCI Logging
+## Container Instances Prometheus - Grafana -setup with node-exporter, a Java Spring Boot app and OCI Logging
 
 <ul>
 <li>Spring Boot apps contains Prometheus Java exporter</li>
@@ -19,6 +19,22 @@ TENANCY_NAMESPACE
 </pre>
 
 It uses <code>FRA</code> region for OCIR, i.e. Registry is <code>fra.ocir.io</code>
+
+## Create object storage bucket with Prometheus and Grafana configs
+
+Bucket name: <code>prometheus-grafana</code> (default, can be changed when deploying the Stack)
+<p>
+Directories in the bucket:
+<pre>
+├── grafana/
+│   └── provisioning/
+│       ├── dashboards/
+│       └── datasources/
+└── prometheus/
+</pre>
+Upload files from <code>object-storage</code> to the directory structure above in the bucket.
+<p>
+<i><b>Remember to change the username and password in Grafana config before uploading!</b></i>
 
 ## Deploy the Container Instances with the Terraform Stack
 
