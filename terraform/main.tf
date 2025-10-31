@@ -27,12 +27,11 @@ resource "oci_container_instances_container_instance" "container_instance" {
     image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.sidecar_image}"
     display_name = "sidecar"
     environment_variables = {
-      "config_file" = var.config_file
       "config_bucket" = var.config_bucket
       "config_path" = var.config_mount_path
       "log_file" = "${var.log_mount_path}/${var.log_file}"
       "log_ocid" = var.log_ocid
-      "" = var.config_reload_delay
+      "reload_delay" = var.config_reload_delay
     }
 
     is_resource_principal_disabled = "false"
