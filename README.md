@@ -3,7 +3,7 @@
 <ul>
 <li>Spring Boot apps contains Prometheus Java exporter</li>
 <li>Logs are exported to OCI Logging with a custom sidecar</li>
-<li>Custom sidecar also pulls Prometheus config in 30s intervals from a Object Storage private bucket for easy config changes</li>
+<li>Custom sidecar also pulls configs in 30s intervals from a Object Storage private bucket for easy config changes</li>
 </ul>
 
 ## Build containers
