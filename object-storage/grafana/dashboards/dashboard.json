@@ -1,0 +1,72 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "A provisioned dashboard for Prometheus CPU usage.",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "panels": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "P_9090_DS"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "alertThreshold": true
+      },
+      "targets": [
+        {
+          "expr": "100 - (avg by (instance) (rate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "refId": "A",
+          "interval": ""
+        }
+      ],
+      "title": "CPU Usage Percentage (Prometheus)",
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 34,
+  "style": "dark",
+  "tags": [
+    "prometheus",
+    "cpu",
+    "9090"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {},
+  "title": "Prometheus CPU Metrics",
+  "uid": "prom-cpu-metrics",
+  "version": 1
+}

@@ -39,6 +39,12 @@ variable "prometheus_image" {
   description = "Prometheus image e.g. prom/prometheus:main"
 }
 
+variable "grafana_image" {
+  type = string
+  default = "grafana/grafana:latest"
+  description = "Grafana image e.g. grafana/grafana:latest"
+}
+
 variable "app_image_1" {
   type = string
   default = "prometheusjavademo:1.0.0"
@@ -68,30 +74,33 @@ variable "log_mount_name" {
   default = "applog"
 }
 
-variable "config_mount_name" {
-  type    = string
-  default = "prometheus_config"
-}
-
-variable "config_mount_path" {
-  type    = string
-  default = "/etc/prometheus"
-}
-
-variable "config_bucket" {
-  type    = string
-  default = "prometheus"
-}
-
-variable "config_file" {
-  type    = string
-  default = "prometheus.yml"
-}
-
 variable "log_file" {
   type    = string
   default = "app.log"
 }
+
+variable "config_mount_name" {
+  type    = string
+  default = "prometheus_grafana_configs"
+}
+
+variable "config_mount_path" {
+  type    = string
+  default = "/etc"
+  description = "Config path on volume mount, without trailing /"
+}
+
+variable "config_bucket" {
+  type    = string
+  default = "prometheus-grafana"
+}
+
+variable "config_reload_delay" {
+  type    = number
+  default = 30000
+  description = "Config reload interval in ms, use zero for never"
+}
+
 
 
 

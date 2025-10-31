@@ -27,11 +27,11 @@ resource "oci_container_instances_container_instance" "container_instance" {
     image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.sidecar_image}"
     display_name = "sidecar"
     environment_variables = {
-      "config_file" = var.config_file
       "config_bucket" = var.config_bucket
       "config_path" = var.config_mount_path
       "log_file" = "${var.log_mount_path}/${var.log_file}"
       "log_ocid" = var.log_ocid
+      "reload_delay" = var.config_reload_delay
     }
 
     is_resource_principal_disabled = "false"
@@ -70,7 +70,7 @@ resource "oci_container_instances_container_instance" "container_instance" {
   
   containers {
     arguments = [
-      "--config.file=${var.config_mount_path}/${var.config_file}",
+      "--config.file=${var.config_mount_path}/prometheus/prometheus.yml",
       "--enable-feature=auto-reload-config",
       "--config.auto-reload-interval=30s"
     ]
@@ -85,14 +85,28 @@ resource "oci_container_instances_container_instance" "container_instance" {
       vcpus_limit         = "1.0"
     }
     volume_mounts {
-          mount_path  = var.log_mount_path
-          volume_name = var.log_mount_name
+          mount_path  = var.config_mount_path
+          volume_name = var.config_mount_name
+    } 
+  }
+  
+  containers {
+    arguments = [
+    ]
+    image_url    = var.grafana_image
+    display_name = "grafana"
+    environment_variables = {
+    }
+    
+    is_resource_principal_disabled = "false"
+    resource_config {
+      memory_limit_in_gbs = "1.0"
+      vcpus_limit         = "1.0"
     }
     volume_mounts {
           mount_path  = var.config_mount_path
           volume_name = var.config_mount_name
-    }
-    
+    } 
   }
   
   #######################################
@@ -108,7 +122,7 @@ resource "oci_container_instances_container_instance" "container_instance" {
   }
 
   container_restart_policy = "ON_FAILURE"
-  display_name             = "Prometheus Sidecar example"
+  display_name             = "Prometheus Grafana CI example"
 
   graceful_shutdown_timeout_in_seconds = "10"
 
