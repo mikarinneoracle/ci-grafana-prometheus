@@ -122,7 +122,7 @@ resource "oci_container_instances_container_instance" "container_instance" {
   }
 
   container_restart_policy = "ON_FAILURE"
-  display_name             = "Prometheus Sidecar example"
+  display_name             = "Prometheus Grafana CI example"
 
   graceful_shutdown_timeout_in_seconds = "10"
 
