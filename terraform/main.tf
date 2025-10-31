@@ -70,6 +70,7 @@ resource "oci_container_instances_container_instance" "container_instance" {
   
   containers {
     arguments = [
+      "--config.file=${var.config_mount_path}/prometheus/prometheus.yml",
       "--enable-feature=auto-reload-config",
       "--config.auto-reload-interval=30s"
     ]
