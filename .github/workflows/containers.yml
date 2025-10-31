@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "grafana" ]
     paths-ignore:
       - 'README.md'
       - 'www-data/**'
