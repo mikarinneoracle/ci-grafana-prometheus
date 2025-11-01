@@ -1,7 +1,8 @@
 ## Container Instances Prometheus - Grafana -setup with node-exporter, a Java Spring Boot app and OCI Logging
 
 <ul>
-<li>Spring Boot apps contains Prometheus Java exporter</li>
+<li>Node exporter for the OCI container instance metrics</li>
+<li>Spring Boot Java exporter for app metrics</li>
 <li>Logs are exported to OCI Logging with a custom sidecar</li>
 <li>Custom sidecar also pulls configs in 30s intervals from a Object Storage private bucket for easy config changes</li>
 </ul>
