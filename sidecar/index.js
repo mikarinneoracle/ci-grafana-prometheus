@@ -7,16 +7,16 @@ const loggingingestion = require("oci-loggingingestion");
 const fs = require("fs");
 
 async function start() {
-    const config_path = process.env.config_path;
-    console.log("PATH:" + config_path);
+    const configPath = process.env.config_path;
+    console.log("PATH:" + configPath);
     const bucket = process.env.config_bucket;
     console.log("BUCKET:" + bucket);
-    const log_ocid = process.env.log_ocid;
-    console.log("OCI LOG:" + log_ocid);
-    const log_file = process.env.log_file;
-    console.log("LOG FILE:" + log_file);
-    const reload_delay = process.env.reload_delay;
-    console.log("OS BUCKET CONFIG RELOAD (ms):" + reload_delay);
+    const logOcid = process.env.log_ocid;
+    console.log("OCI LOG:" + logOcid);
+    const logFile = process.env.log_file;
+    console.log("LOG FILE:" + logFile);
+    const reloadDelay = process.env.reload_delay;
+    console.log("OS BUCKET CONFIG RELOAD (ms):" + reloadDelay);
 
     //const provider = new common.ConfigFileAuthenticationDetailsProvider("~/.oci/config");
     const provider = common.ResourcePrincipalAuthenticationDetailsProvider.builder();
@@ -28,8 +28,8 @@ async function start() {
     const nsResponse = await osClient.getNamespace(nsRequest);
     const namespace = nsResponse.value;
 
-    mount(osClient, namespace, bucket, config_path, reload_delay);
-    startTail(logClient, log_ocid, log_file);
+    mount(osClient, namespace, bucket, configPath, reloadDelay);
+    startTail(logClient, logOcid, logFile);
 }
 
 async function mount(osClient, namespace, bucket, path, reloadDelay)
@@ -84,12 +84,13 @@ async function downloadFile(osClient, namespace, bucket, file, path)
   } 
 }
 
-async function startTail(logClient, log_ocid, log_file)
+async function startTail(logClient, logOcid, logFile)
 {
-  const tail = new tailfile(log_file, {encoding: 'utf8'})
+  const tail = new tailfile(logFile, {encoding: 'utf8'})
   .on('data', (chunk) => {
     //console.log(`${chunk}`)
-    writeLog(logClient, log_ocid, log_file, log_file, `${chunk}`)
+  //writeLog(logClient, logOcid, source,   subject,  type,      data)
+    writeLog(logClient, logOcid, logFile,  logFile,  logFile,   `${chunk}`)
   })
   .on('tail_error', (err) => {
     console.error('TailFile had an error!', err)
@@ -99,15 +100,15 @@ async function startTail(logClient, log_ocid, log_file)
   })
   .start()
   .catch((err) => {
-    console.log("Cannot start.  Does " + log_file + "  exist?")
+    console.log("Cannot start.  Does " + logFile + "  exist?")
     setTimeout(function() {
-        console.log("Trying again to open " + log_file + " ..");
-        startTail(logClient, log_ocid, log_file);
+        console.log("Trying again to open " + logFile + " ..");
+        startTail(logClient, logOcid, logFile);
     }, 5000);
   });
 }
 
-async function writeLog(logClient, log_ocid, subject, type, data)
+async function writeLog(logClient, logOcid, source, subject, type, data)
 {
   try {
         const putLogsDetails = {
@@ -120,14 +121,14 @@ async function writeLog(logClient, log_ocid, subject, type, data)
                   data: data
                 }
               ],
-              source: "nginx-logging-sidecar",
+              source: source,
               type: type,
               subject: subject
             }
           ]
         };
         var putLogsRequest = loggingingestion.requests.PutLogsRequest = {
-          logId: log_ocid,
+          logId: logOcid,
           putLogsDetails: putLogsDetails,
           timestampOpcAgentProcessing: new Date()
         };
