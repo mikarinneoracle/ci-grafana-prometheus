@@ -63,8 +63,8 @@ resource "oci_container_instances_container_instance" "container_instance" {
       vcpus_limit         = "1.0"
     }
     volume_mounts {
-          mount_path  = var.log_mount_path
-          volume_name = var.log_mount_name
+          mount_path  = var.config_mount_path
+          volume_name = var.config_mount_name
     }
   }
   
