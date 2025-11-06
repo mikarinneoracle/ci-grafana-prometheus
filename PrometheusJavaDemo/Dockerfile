@@ -1,4 +1,4 @@
- FROM openjdk:21
+ FROM openjdk:26-ea-21-oraclelinux8
 
  EXPOSE 8080
 
