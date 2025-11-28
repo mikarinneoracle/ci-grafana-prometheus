@@ -102,11 +102,11 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "editorMode": "builder",
-          "expr": "promhttp_metric_handler_requests_total",
+          "expr": "requests_total",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -196,7 +196,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "editorMode": "builder",
@@ -302,7 +302,7 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "12.2.1",
+      "pluginVersion": "12.3.0",
       "targets": [
         {
           "datasource": {
@@ -339,5 +339,5 @@
   "timezone": "",
   "title": "Prometheus CPU Metrics",
   "uid": "prom-cpu-metrics",
-  "version": 2
+  "version": 1
 }
