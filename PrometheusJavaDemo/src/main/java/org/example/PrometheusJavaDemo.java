@@ -17,6 +17,7 @@ import java.io.PrintStream;
 @RestController
 public class PrometheusJavaDemo {
 
+    private int i = 0;
     private static final Counter requestCount = Counter.builder()
             .name("requests_total")
             .register();
@@ -38,7 +39,8 @@ public class PrometheusJavaDemo {
     @GetMapping("/")
     public String sayHello() throws InterruptedException {
         requestCount.inc();
-        String message = "Hello, World, " + System.currentTimeMillis() % 1000 + "!\n";
+        i++;
+        String message = "Hello " + i;
         System.out.println(message);
         return message;
     }
