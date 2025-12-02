@@ -40,13 +40,7 @@ public class PrometheusJavaDemo {
     public String sayHello() throws InterruptedException {
         requestCount.inc();
         i++;
-        String message = "";
-        if(i == 1)
-        {
-            message = "CI just got refreshed! " + i;
-        } else {
-            message = "Hello from CI! " + i;
-        }
+        String message = "Hello " + i;
         System.out.println(message);
         return message;
     }
