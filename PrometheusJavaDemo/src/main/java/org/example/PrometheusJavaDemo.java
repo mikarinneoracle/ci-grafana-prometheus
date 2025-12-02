@@ -44,8 +44,8 @@ public class PrometheusJavaDemo {
         String message = "";
         if(i == 1)
         {
-            message = "Hello " + i + " <br>ip = " + ip;
-            //message = "CI just got refreshed! Hello " + i + " <br>ip = " + ip;
+            //message = "Hello " + i + " <br>ip = " + ip;
+            message = "CI just got refreshed! Hello " + i + " <br>ip = " + ip;
         } else {
             message = "Hello " + i + " <br>ip = " + ip;
         }
