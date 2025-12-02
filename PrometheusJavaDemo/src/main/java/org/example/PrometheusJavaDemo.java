@@ -11,24 +11,29 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.util.Properties;
+
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 
 @SpringBootApplication
 @RestController
 public class PrometheusJavaDemo {
 
     private int i = 0;
-    private final static Counter requestCount = Counter.builder()
+    private static final Counter requestCount = Counter.builder()
             .name("requests_total")
             .register();
 
     public static void main(String[] args) {
         String logFile = System.getenv("log_file");
-        SpringApplication springApplication = new SpringApplication(PrometheusJavaDemo.class);
-        Properties properties = new Properties();
-        properties.put("log_file", logFile);
-        springApplication.setDefaultProperties(properties);
-        springApplication.run(args);
+        if(logFile != null) {
+            System.out.println("Sending STDOUT logs to " + logFile);
+            try {
+                System.setOut(new PrintStream(new FileOutputStream(logFile, true)));
+            } catch (Exception e) {
+                System.out.println("Logs output error to " + logFile + " is :" + e.getMessage());
+            }
+        }
         SpringApplication.run(PrometheusJavaDemo.class, args);
         JvmMetrics.builder().register();
     }
@@ -38,8 +43,8 @@ public class PrometheusJavaDemo {
         requestCount.inc();
         String ip = "";
         try(final DatagramSocket socket = new DatagramSocket()){
-          socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
-          ip = socket.getLocalAddress().getHostAddress();
+            socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+            ip = socket.getLocalAddress().getHostAddress();
         } catch (Exception e)
         {
             System.out.println(e.getMessage());
@@ -48,7 +53,8 @@ public class PrometheusJavaDemo {
         String message = "";
         if(i == 1)
         {
-            message = "CI just got refreshed! Hello " + i + " <br>ip = " + ip;
+            message = "Hello " + i + " <br>ip = " + ip;
+            //message = "CI just got refreshed! Hello " + i + " <br>ip = " + ip;
         } else {
             message = "Hello " + i + " <br>ip = " + ip;
         }
