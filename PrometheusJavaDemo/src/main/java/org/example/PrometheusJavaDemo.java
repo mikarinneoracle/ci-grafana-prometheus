@@ -9,6 +9,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -23,15 +25,6 @@ public class PrometheusJavaDemo {
             .register();
 
     public static void main(String[] args) {
-        String logFile = System.getenv("log_file");
-        if(logFile != null) {
-            System.out.println("Sending STDOUT logs to " + logFile);
-            try {
-                System.setOut(new PrintStream(new FileOutputStream(logFile, true)));
-            } catch (Exception e) {
-                System.out.println("Logs output error to " + logFile + " is :" + e.getMessage());
-            }
-        }
         SpringApplication.run(PrometheusJavaDemo.class, args);
         JvmMetrics.builder().register();
     }
@@ -39,8 +32,22 @@ public class PrometheusJavaDemo {
     @GetMapping("/")
     public String sayHello() throws InterruptedException {
         requestCount.inc();
+        String ip = "";
+        try(final DatagramSocket socket = new DatagramSocket()){
+          socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+          ip = socket.getLocalAddress().getHostAddress();
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         i++;
-        String message = "Hello " + i;
+        String message = "";
+        if(i == 1)
+        {
+            message = "CI just got refreshed! Hello " + i + " <br>ip = " + ip;
+        } else {
+            message = "Hello " + i + " <br>ip = " + ip;
+        }
         System.out.println(message);
         return message;
     }
