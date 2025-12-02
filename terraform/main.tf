@@ -8,9 +8,6 @@ resource "oci_container_instances_container_instance" "container_instance" {
 
     image_url    = "${var.ocir_region}/${data.oci_objectstorage_namespace.objectstorage_namespace.namespace}/${var.app_image_1}"
     display_name = "Java demo"
-    environment_variables = {
-        "log_file" = "${var.log_mount_path}/${var.log_file}"
-    }
     
     is_resource_principal_disabled = "false"
     resource_config {
