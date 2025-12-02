@@ -9,6 +9,8 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -39,8 +41,22 @@ public class PrometheusJavaDemo {
     @GetMapping("/")
     public String sayHello() throws InterruptedException {
         requestCount.inc();
+        String ip = "";
+        try(final DatagramSocket socket = new DatagramSocket()){
+          socket.connect(InetAddress.getByName("8.8.8.8"), 10002);
+          ip = socket.getLocalAddress().getHostAddress();
+        } catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+        }
         i++;
-        String message = "Hello " + i;
+        String message = "";
+        if(i == 1)
+        {
+            message = "CI just got refreshed! Hello " + i + " ,ip=" + ip;
+        } else {
+            message = "Hello " + i + " ,ip=" + ip;
+        }
         System.out.println(message);
         return message;
     }
