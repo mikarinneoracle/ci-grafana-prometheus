@@ -11,24 +11,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.util.Properties;
 
 @SpringBootApplication
 @RestController
 public class PrometheusJavaDemo {
 
     private int i = 0;
-    private static final Counter requestCount = Counter.builder()
+    private final static Counter requestCount = Counter.builder()
             .name("requests_total")
             .register();
 
     public static void main(String[] args) {
+        String logFile = System.getenv("log_file");
+        SpringApplication springApplication = new SpringApplication(PrometheusJavaDemo.class);
+        Properties properties = new Properties();
+        properties.put("log_file", logFile);
+        springApplication.setDefaultProperties(properties);
+        springApplication.run(args);
         SpringApplication.run(PrometheusJavaDemo.class, args);
         JvmMetrics.builder().register();
-        System.out.println(System.getenv("logging.file.path"));
-        System.out.println(System.getenv("logging.file.name"));
     }
 
     @GetMapping("/")
