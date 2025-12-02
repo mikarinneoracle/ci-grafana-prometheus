@@ -27,6 +27,8 @@ public class PrometheusJavaDemo {
     public static void main(String[] args) {
         SpringApplication.run(PrometheusJavaDemo.class, args);
         JvmMetrics.builder().register();
+        System.out.println(System.getenv("logging.file.path"));
+        System.out.println(System.getenv("logging.file.name"));
     }
 
     @GetMapping("/")
