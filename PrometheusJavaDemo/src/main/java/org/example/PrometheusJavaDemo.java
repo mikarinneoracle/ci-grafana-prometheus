@@ -22,6 +22,7 @@ public class PrometheusJavaDemo {
     private static final Counter requestCount = Counter.builder()
             .name("requests_total")
             .register();
+    private static final Logger logger = LoggerFactory.getLogger(PrometheusJavaDemo.class);
 
     public static void main(String[] args) {
         SpringApplication.run(PrometheusJavaDemo.class, args);
@@ -37,7 +38,7 @@ public class PrometheusJavaDemo {
             ip = socket.getLocalAddress().getHostAddress();
         } catch (Exception e)
         {
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
         }
         i++;
         String message = "";
@@ -48,7 +49,7 @@ public class PrometheusJavaDemo {
         } else {
             message = "Hello " + i + " <br>ip = " + ip;
         }
-        System.out.println(message);
+        logger.info(message);
         return message;
     }
 
