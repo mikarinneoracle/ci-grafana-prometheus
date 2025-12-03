@@ -47,7 +47,7 @@ public class PrometheusJavaDemo {
             //message = "Hello " + i + " <br>ip = " + ip;
             message = "CI just got refreshed! Hello " + i + " <br>ip = " + ip;
         } else {
-            message = "Hello " + i + " <br>ip = " + ip;
+            message = "Hello from CI " + i + " <br>ip = " + ip;
         }
         logger.info(message);
         return message;
