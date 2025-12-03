@@ -3,7 +3,7 @@
 <ul>
 <li>Node exporter for the OCI container instance metrics</li>
 <li>Spring Boot Java exporter for app metrics</li>
-<li>Logs are exported to OCI Logging with a custom sidecar. Sprinboot app log is configured to <code>resource/application.properties</code> as <code>/var/log/app.log</code></li>
+<li>Logs are exported to OCI Logging with a custom sidecar. Springboot app log is configured to <code>resources/application.properties</code> as <code>/var/log/app.log</code></li>
 <li>Custom sidecar also pulls configs in 30s intervals from a Object Storage private bucket for easy config changes</li>
 </ul>
 
