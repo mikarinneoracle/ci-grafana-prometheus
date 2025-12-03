@@ -43,3 +43,6 @@ jobs:
         mvn clean package
         docker build . -t fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/prometheusjavademo:1.0.0
         docker push -q fra.ocir.io/${{ secrets.TENANCY_NAMESPACE }}/prometheusjavademo:1.0.0
+    - name: update Stack Manager with webhook
+      run: |
+        curl -H "Authorization: Basic ${{ secrets.STACK_MGR_AUTH }}" "${{ secrets.STACK_MGR_URL }}/webhook/job?ciname=javaApp&compartmentname=mika.rinne"
