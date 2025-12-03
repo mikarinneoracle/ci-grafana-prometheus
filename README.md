@@ -4,7 +4,7 @@
 <li>Node exporter for the OCI container instance metrics</li>
 <li>Spring Boot Java exporter for app metrics</li>
 <li>Logs are exported to OCI Logging with a custom sidecar. Springboot app log is configured to <code>resources/application.properties</code> as <code>/var/log/app.log</code></li>
-<li>Custom sidecar also pulls configs in 30s intervals from a Object Storage private bucket for easy config changes</li>
+<li>Custom sidecar also pulls configs in 30s intervals from a Object Storage private bucket for easy config changes to <code>/etc</code> of Prometheus and Grafana containers' shared volume</li>
 </ul>
 
 ## Build containers
