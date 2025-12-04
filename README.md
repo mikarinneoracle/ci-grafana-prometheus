@@ -41,9 +41,14 @@ Upload files from <code>object-storage</code> to the directory structure above i
 
 Deploy the Container Instances stack with OCI Resource Manager (Terraform). First clone this repo to localhost and drag-drop the terraform folder to OCI Resource Manager to create a new Stack. Then configure the stack and apply.
 <p>
+    
 Subnet ports can be opened for the following access:
 <ul>
     <li>8080 for the Springboot app</li>
     <li>3000 for Grafana</li>
     <li>9090 for Prometheus (optional)</li>
 </ul>
+For taking this to a a quick spin, you can use a VCN with a public subnet to have public access to Grafana.
+VCN and subnet creation including the ports above is manual and not included in the Terraform Stack.
+Then, git clone this repo and drag&drop the terraform folder to OCI Resource Manager when creating a new Stack.
+After this, configure then vars and continue to have the stack deployed.
