@@ -51,6 +51,7 @@ Subnet ports can be opened for the following access:
 <p>
     
 For taking this to a a quick spin, you can create/use a VCN with a public subnet to have public access to Grafana.
-VCN and subnet creation including the ports above is manual and not included in the Terraform Stack.
-Then, git clone this repo and drag&drop the terraform folder to OCI Resource Manager when creating a new Stack.
-After this, configure the stack vars and continue to have the stack deployed for testing. Destroy and delete after finishing the test.
+VCN and subnet creation including the ports above is manual and not included in the Terraform Stack.<br>
+Also the OCI Log needs to be created manually for logging.<br>
+Once created git clone this repo and drag&drop the terraform folder to OCI Resource Manager when creating a new Stack.
+Then, configure the stack vars and continue to have the stack deployed for testing. Destroy and delete after finishing the test.
